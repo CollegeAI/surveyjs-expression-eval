@@ -1,6 +1,6 @@
 {
   "name": "surveyjs-expression-eval",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Evaluate expressions from the SurveyJS standard.",
   "main": "src/index.js",
   "scripts": {
