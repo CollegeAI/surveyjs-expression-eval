@@ -3,7 +3,14 @@
   "version": "1.0.0",
   "description": "Evaluate expressions from the SurveyJS standard.",
   "main": "index.js",
+  "scripts": {
+    "prepublish": "prettier --write"
+  },
   "repository": "git@github.com:WorkAroundOnline/surveyjs-expression-eval.git",
   "author": "Severin Ibarluzea <seveibar@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "^1.15.3",
+    "tape": "^4.9.1"
+  }
 }
