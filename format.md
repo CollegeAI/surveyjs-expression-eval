@@ -47,5 +47,5 @@ rowsWithValue({quality}, 'disagree') >= 3
 | `A notcontain B`, `A notcontains B`          | Check if A contains B              |
 | `A notempty`                                 | Check if A has atleast one element |
 | `A empty`                                    | Check if A has no elements         |
-| `A or B`, `A | B`, `A || B`                  | Check if A contains B              |
+| `A or B`, `A \| B`, `A \|\| B`               | Check if A contains B              |
 | `A and B`, `A & B`, `A && B`                 | Check if A contains B              |
