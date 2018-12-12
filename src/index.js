@@ -111,10 +111,10 @@ const setupReduce = (functions, context) => {
           case "contain":
           case "contains":
           case "*=":
-            return left.includes(right)
+            return (left || []).includes(right)
           case "notcontain":
           case "notcontains":
-            return !left.includes(right)
+            return !(left || []).includes(right)
           case "or":
           case "||":
           case "|":
