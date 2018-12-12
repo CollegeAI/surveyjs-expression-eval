@@ -3,7 +3,6 @@
 This module allows you to evaluate expressions using the SurveyJS language.
 
 ```javascript
-
 import evaluateExpression from "surveyjs-expression-eval"
 
 evaluateExpression("{myvar} > {myothervar}", {
@@ -13,4 +12,4 @@ evaluateExpression("{myvar} > {myothervar}", {
 // true
 ```
 
-See [format.md](#) for more examples and a list of operators.
+See [format.md](blob/master/format.md) for more examples and a list of operators.
