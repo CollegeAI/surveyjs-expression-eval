@@ -13,13 +13,13 @@ jsep.addBinaryOp("notcontain", 6)
 jsep.addBinaryOp("!=", 7)
 jsep.addBinaryOp("<>", 7)
 
-jsep.addBinaryOp("or", 14)
-jsep.addBinaryOp("|", 14)
-jsep.addBinaryOp("||", 14)
+jsep.addBinaryOp("or", 12)
+jsep.addBinaryOp("|", 12)
+jsep.addBinaryOp("||", 12)
 
-jsep.addBinaryOp("and", 14)
-jsep.addBinaryOp("&", 14)
-jsep.addBinaryOp("&&", 14)
+jsep.addBinaryOp("and", 11)
+jsep.addBinaryOp("&", 11)
+jsep.addBinaryOp("&&", 11)
 
 jsep.addBinaryOp("^", 9)
 jsep.addBinaryOp("%", 3)
@@ -27,8 +27,8 @@ jsep.addBinaryOp("%", 3)
 // These are right-side unary operators, we'll insert a fake right hand
 // argument so that jsep can correctly read them
 const rightSideUnaryOperators = ["notempty", "empty"]
-jsep.addBinaryOp("notempty", 2)
-jsep.addBinaryOp("empty", 2)
+jsep.addBinaryOp("notempty", 14)
+jsep.addBinaryOp("empty", 14)
 
 const setupReduceInsideBraces = (functions, context) => {
   const reduceInsideBraces = args => {
@@ -77,59 +77,63 @@ const setupReduce = (functions, context) => {
         throw new Error(`Function "${tree.callee.name}" does not exist`)
       }
       case "BinaryExpression": {
-        const { left, right } = tree
+        const [left, right] = [reduce(tree.left), reduce(tree.right)]
         switch (tree.operator) {
           case "=":
           case "==":
           case "equals":
           case "equal": {
-            return reduce(left) === reduce(right)
+            return left === right
           }
           case "+":
-            return reduce(left) + reduce(right)
+            return left + right
           case "-":
-            return reduce(left) - reduce(right)
+            return left - right
           case "/":
-            return reduce(left) / reduce(right)
+            return left / right
           case "*":
-            return reduce(left) * reduce(right)
+            return left * right
           case ">":
-            return reduce(left) > reduce(right)
+            return left > right
           case "<":
-            return reduce(left) < reduce(right)
+            return left < right
           case "<=":
-            return reduce(left) <= reduce(right)
+            return left <= right
           case ">=":
-            return reduce(left) >= reduce(right)
+            return left >= right
           case "^":
-            return Math.pow(reduce(left), reduce(right))
+            return Math.pow(left, right)
           case "%":
-            return reduce(left) % reduce(right)
+            return left % right
           case "!=":
           case "<>":
-            return reduce(left) != reduce(right)
+            return left != right
           case "contain":
           case "contains":
           case "*=":
-            return reduce(left).includes(right)
+            return left.includes(right)
           case "notcontain":
           case "notcontains":
-            return !reduce(left).includes(right)
+            return !left.includes(right)
           case "or":
           case "||":
           case "|":
-            return reduce(left) || reduce(right)
+            return left || right
           case "and":
           case "&&":
           case "&":
-            return reduce(left) && reduce(right)
+            return left && right
           case "empty":
-            return reduce(left).length === 0
+            return !left || left.length === 0
           case "notempty":
-            return reduce(left).length > 0
+            return left && left.length > 0
         }
       }
       case "UnaryExpression": {
+        throw new Error("unsupported unary expression")
+      }
+      case "ArrayExpression": {
+        return tree.elements.map(e => reduce(e))
       }
       case "Literal": {
         return tree.value
