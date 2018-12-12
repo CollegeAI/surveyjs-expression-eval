@@ -1,12 +1,14 @@
-const tape = require("tape")
+const test = require("tap").test
 const evaluate = require("./")
 
-const defaultContext = {}
+const defaultContext = {
+  haveKids: "yes"
+}
 
 const tests = [
   { expr: `{haveKids}='yes'`, expect: true },
   { expr: `{haveKids}='yes' and {kids} >= 1`, expect: true },
-  { expr: `{matrix.name}='yes'`, expect: true },
+  { expr: `{array.name}='yes'`, expect: true },
   { expr: `rowsWithValue({quality}, 'disagree') >= 3`, expect: true },
   { expr: `{car} notempty`, expect: true },
   { expr: `{car} contains {item}`, expect: true },
@@ -18,8 +20,8 @@ const tests = [
   }
 ]
 
-for (const test of tests) {
-  tape.test(test.expr, () => {
-    evaluate(test.expr, test.context || defaultContext)
+for (const { expr, expect, context, functions } of tests.slice(0, 1)) {
+  test(expr, t => {
+    t.equal(evaluate(expr, test || defaultContext, functions), expect)
   })
 }
