@@ -4,7 +4,8 @@
   "description": "Evaluate expressions from the SurveyJS standard.",
   "main": "index.js",
   "scripts": {
-    "prepublish": "prettier --write"
+    "format": "prettier --write 'src/**/*.js'",
+    "test": ""
   },
   "repository": "git@github.com:WorkAroundOnline/surveyjs-expression-eval.git",
   "author": "Severin Ibarluzea <seveibar@gmail.com>",
