@@ -51,6 +51,11 @@ const setupReduceInsideBraces = (functions, context) => {
           )
         }
       }
+      case "CallExpression": {
+        if (args[0].callee.name === "var") {
+          return context[args[0].arguments[0].value]
+        }
+      }
       default:
         throw new Error(
           `Invalid content in curly braces (3): "${JSON.stringify(args)}"`

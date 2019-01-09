@@ -3,6 +3,7 @@ const evaluate = require("./")
 
 const defaultContext = {
   haveKids: "yes",
+  "have-kids": "yes",
   kidCount: 2,
   person: { name: "betsy" },
   items: ["shirt", "pants", "chapstick"],
@@ -12,6 +13,8 @@ const defaultContext = {
 
 const tests = [
   { expr: `{haveKids}='yes'`, expect: true },
+  { expr: `{var('have-kids')}='yes'`, expect: true },
+  { expr: `{var('have-kids').length} = 3`, expect: true },
   { expr: `{haveKids}='yes' and {kidCount} >= 1`, expect: true },
   { expr: `{kidCount} < 2`, expect: false },
   { expr: `{person.name}='betsy'`, expect: true },

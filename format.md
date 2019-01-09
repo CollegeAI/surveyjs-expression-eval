@@ -9,6 +9,8 @@ This is a specification based on what I can gather from the [SurveyJS documentat
 
 {haveKids}='yes' and {kids} >= 1
 
+{var('have-kids')}='yes'
+
 {matrix.name}='yes'
 
 // "quality" is a matrix question, rowsWithValue is a custom function
