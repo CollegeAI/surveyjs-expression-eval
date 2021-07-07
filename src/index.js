@@ -10,6 +10,10 @@ jsep.addBinaryOp("*=", 6)
 jsep.addBinaryOp("notcontains", 6)
 jsep.addBinaryOp("notcontain", 6)
 
+jsep.addBinaryOp("anyof", 6)
+jsep.addBinaryOp("allof", 6)
+
+
 jsep.addBinaryOp("!=", 7)
 jsep.addBinaryOp("<>", 7)
 
@@ -64,6 +68,18 @@ const setupReduceInsideBraces = (functions, context) => {
   }
   return reduceInsideBraces
 }
+
+const isValueEmpty = (value) => {
+  if (Array.isArray(value) && value.length === 0) return true;
+  if (!!value && typeof value === "object" && value.constructor === Object) {
+    for (var key in value) {
+      if (!isValueEmpty(value[key])) return false;
+    }
+    return true;
+  }
+  return !value && value !== 0 && value !== false;
+}
+
 
 const setupReduce = (functions, context) => {
   const reduceInsideBraces = setupReduceInsideBraces(functions, context)
@@ -120,6 +136,23 @@ const setupReduce = (functions, context) => {
           case "notcontain":
           case "notcontains":
             return !(left || []).includes(right)
+          case "anyof": 
+              if (!left && !isValueEmpty(right)) return true;
+              if (!Array.isArray(right))
+                return (left || []).includes(right);
+              for (var i = 0; i < right.length; i++) {
+                if ((left || []).includes(right[i])) return true;
+              }
+              return false;
+          case "allof": 
+              if (!left && !isValueEmpty(right)) return false;
+              if (!Array.isArray(right))
+                return (left || []).includes(right);
+              for (var i = 0; i < right.length; i++) {
+                if (!(left || []).includes(right[i]))
+                  return false;
+              }
+              return true;
           case "or":
           case "||":
           case "|":
