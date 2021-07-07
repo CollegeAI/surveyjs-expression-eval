@@ -1,4 +1,4 @@
-const test = require("tap").test
+const test = require('tap').test
 const evaluate = require("./")
 
 const defaultContext = {
@@ -32,12 +32,20 @@ const tests = [
       countCarApparel: (items, clothes) =>
         items.filter(item => clothes.includes(item)).length
     }
-  }
+  },
+  { expr: `['a', 'c'] anyof ['a', 'b']`, expect: true },
+  { expr: `['a', 'b'] anyof ['a', 'b']`, expect: true },
+  { expr: `['c', 'd'] anyof ['a', 'b']`, expect: false },
+
+  { expr: `['a', 'c'] allof ['a', 'b']`, expect: false },
+  { expr: `['a', 'b', 'c'] allof ['a', 'b']`, expect: true },
+  { expr: `['c', 'd'] allof ['a', 'b']`, expect: false },
+  
 ]
 
 for (const { expr, expect, context, functions } of tests) {
   test(expr, t => {
-    t.plan(1)
-    t.equal(evaluate(expr, context || defaultContext, functions), expect)
+    t.equal(evaluate(expr, context || defaultContext, functions), expect);
+    t.end();
   })
 }
