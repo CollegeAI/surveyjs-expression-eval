@@ -8,7 +8,8 @@ const defaultContext = {
   person: { name: "betsy" },
   items: ["shirt", "pants", "chapstick"],
   favoriteItem: "chapstick",
-  phone: "123-456-7890"
+  phone: "123-456-7890",
+  nullValue: undefined
 }
 
 const tests = [
@@ -40,7 +41,8 @@ const tests = [
   { expr: `['a', 'c'] allof ['a', 'b']`, expect: false },
   { expr: `['a', 'b', 'c'] allof ['a', 'b']`, expect: true },
   { expr: `['c', 'd'] allof ['a', 'b']`, expect: false },
-  
+  { expr: `{nullValue} anyof ['a']`, expect: false },
+  { expr: `{nullValue} anyof []`, expect: true } 
 ]
 
 for (const { expr, expect, context, functions } of tests) {

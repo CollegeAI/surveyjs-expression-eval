@@ -137,7 +137,7 @@ const setupReduce = (functions, context) => {
           case "notcontains":
             return !(left || []).includes(right)
           case "anyof": 
-              if (!left && !isValueEmpty(right)) return true;
+              if (!left && isValueEmpty(right)) return true;
               if (!Array.isArray(right))
                 return (left || []).includes(right);
               for (var i = 0; i < right.length; i++) {
